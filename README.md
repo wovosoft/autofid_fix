@@ -30,6 +30,7 @@ $user = new \App\Models\User();
 $user->forceFill([
     'agent_id' =>$user->agent_id,
     'customer_id' => $user->customer_id,
+    'is_maintainer' => true|false,
     'role' => \App\Enums\Role::values() //any,
     // Other Fields..... 
 ]);
