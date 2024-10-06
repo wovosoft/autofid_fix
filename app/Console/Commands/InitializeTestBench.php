@@ -45,14 +45,15 @@ class InitializeTestBench extends Command
         $this->info("Creating Five Maintainer-Agent");
         //create five maintainer-agents
         foreach (range(1, 3) as $ma) {
+            $username = "maintainer_agent_$ma";
             $maintainerAgent = new User();
             $maintainerAgent
                 ->forceFill([
                     'role' => Role::Agent,
                     'is_maintainer' => true,
                     'name' => 'Maintainer Agent ' . $ma,
-                    'email' => 'maintainer_agent' . $ma . '@example.com',
-                    'password' => bcrypt('maintainer_agent_' . $ma),
+                    'email' => $username . '@example.com',
+                    'password' => bcrypt($username),
                 ])
                 ->saveOrFail();
 
