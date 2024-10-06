@@ -21,6 +21,21 @@ Check Methods in InitializeTestBench.php
 
 This way, users (Agents, Customers, Staffs, Appointments and Slips) should be created.
 
+## User Creation Process
+
+```php
+$user = auth()->user();
+
+$user = new \App\Models\User();
+$user->forceFill([
+    'agent_id' =>$user->agent_id,
+    'customer_id' => $user->customer_id,
+    'role' => \App\Enums\Role::values() //any,
+    // Other Fields..... 
+]);
+$user->saveOrFail();
+```
+
 ## Appointment Creation Process
 
 ```php
@@ -54,6 +69,27 @@ $slip->forceFill([
     // Other Fields..... 
 ]);
 $appointment->saveOrFail();
+```
+
+
+## Users Query
+
+```php
+ $userId = auth()->id();
+
+$users = User::query()
+    ->when(auth()->user()->role !== Role::SuperAdmin, function (Builder $query) use ($userId) {
+        $query
+            ->where('id', $userId)
+            ->orWhere('agent_id', $userId)
+            ->orWhere('customer_id', $userId);
+    })
+    ->paginate();
+
+return view('livewire.auth.users', [
+    "title" => "Users",
+    "users" => $users
+]);
 ```
 
 
