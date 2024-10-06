@@ -3,7 +3,7 @@
 use App\Livewire\Auth\Users;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+Route::redirect('/', '/dashboard');
 
 
 Route::middleware(['auth', 'verified'])
